@@ -6,9 +6,12 @@
 print("hello ladies")
 
 
+
 def test(int):
     if int > 0:
         print("Hello")
 
 
 test(3)
+
+print("hi")
