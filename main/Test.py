@@ -4,3 +4,4 @@
 # Erin was here
 
 print("hello ladies")
+print("hi")
