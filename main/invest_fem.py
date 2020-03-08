@@ -37,33 +37,17 @@ class EnterItemScreen(Screen):
     global inputErrorAmt
     global inputErrorText
 
-    def __init__(self, **kwargs):
-        super(EnterItemScreen, self).__init__(**kwargs)
-
-    def itemErrorDisplay(self):
-        itemName = self.root.get_screen('enter_item').ids.txt_input.text
-        itemCostScreenVal = self.root.get_screen('enter_item').ids.amt_input.text
-        if len(itemCostScreenVal) > 0 and len(itemName) > 0:
-            sm.switch_to(FirstStepScreen(name='first_step'))
-            itemCost = float(itemCostScreenVal)
-
-        if len(itemName):
-            self.ids.error_text.text = "Please enter an item"
-        else:
-            self.ids.error_text.text = ""
-
-    def amtErrorDisplay(self):
-        if len(itemCostScreenVal) > 0 and len(itemName) > 0:
-            sm.switch_to(FirstStepScreen(name='first_step'))
-            itemCost = float(itemCostScreenVal)
-
-        if len(itemCostScreenVal) < 1:
+    def errorDisplay(self):
+        if inputErrorAmt:
             self.ids.error_amt.text = "Please enter an amount"
         else:
             self.ids.error_amt.text = ""
 
+        if inputErrorText:
+            self.ids.error_text.text = "Please enter an item"
+        else:
+            self.ids.error_text.text = ""
     pass
-
 
 class FirstStepScreen(Screen):
     def __init__(self, **kwargs):
