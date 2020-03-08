@@ -1,5 +1,6 @@
 import os
 import math
+import random
 from os import path
 
 from kivy.app import App
@@ -20,17 +21,15 @@ screenFolder = 'screens'
 itemName = ""
 itemCost = 0.0
 balance = 0.0
-savings = 0.0
+savings = 99.0
 workoptions = ""
+amount = 99.0
 
 inputErrorAmt = False
 inputErrorText = False
 for filename in os.listdir(screenFolder):
     with open(os.path.join(screenFolder, filename), encoding='utf8') as f:
         Builder.load_string(f.read())
-
-        # Declare both screens
-
 
 class MainScreen(Screen):
     def closeScreen(self):
@@ -64,7 +63,6 @@ class FirstStepScreen(Screen):
 
             self.ids.item_name.text = itemName
             self.ids.balance.text = str(balance)
-
     pass
 
 
@@ -77,20 +75,13 @@ class SixMonthLaterScreen(Screen):
 
 
 class WorkingOptionScreen(Screen):
-    # def __init__(self, **kwargs):
-    #     super(WorkingOptionScreen, self).__init__(**kwargs)
-    #     with self.canvas.before:
-    #         global work_text
-    #         global savings
-    #
-    #         self.ids.work_opion.text = 'you have $' + savings + 'saved in your savings, do you want to work?'
-    #         self.ids.balance.text = str(balance)
 
-    pass
-
-
-class SaveAllScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super(WorkingOptionScreen, self).__init__(**kwargs)
+        with self.canvas.before:
+            global savings
+            saving_text = str(savings)
+            self.ids.work_text.text = 'you have $' + saving_text + ' saved in your savings, do you want to work?'
 
 
 class SaveSomeScreen(Screen):
@@ -100,13 +91,33 @@ class SaveSomeScreen(Screen):
 class BankAccountScreen(Screen):
     pass
 
+class InvestmentScreen(Screen):
+
+    def __init__(self, **kwargs):
+        super(InvestmentScreen, self).__init__(**kwargs)
+        with self.canvas.before:
+            global amount
+            outcome = self.getOutcome(amount)
+            earnings = outcome - amount
+            earnings_text = str(abs(earnings))
+            outcome_text = str(outcome)
+            if earnings >= 0:
+                self.ids.earning_text.text = 'You are lucky! You earned $' + earnings_text + ' !'
+            else:
+                self.ids.earning_text.text = 'Too bad! You lost $' + earnings_text + ' !'
+            self.ids.outcome_text.text = 'Your current balance is $' + outcome_text + ' !'
+
+
+    def getOutcome(self, p):
+        outcome = int(p*(1+random.uniform(-1 , 1)))
+        return outcome
+
 
 class EndingScreen(Screen):
     def closeScreen(self):
         App.get_running_app().stop()
         Window.close()
 
-    pass
 
 
 # Create the screen manager
@@ -117,9 +128,9 @@ sm.add_widget(FirstStepScreen(name='first_step'))
 sm.add_widget(SixMonthLaterScreen(name='sml'))
 sm.add_widget(WorkingOptionScreen(name='work_option'))
 sm.add_widget(SpendAllScreen(name='spend_all'))
-sm.add_widget(SaveAllScreen(name='save_all'))
 sm.add_widget(SaveSomeScreen(name='save_some'))
 sm.add_widget(BankAccountScreen(name='bank_account'))
+sm.add_widget(InvestmentScreen(name='investment'))
 sm.add_widget(EndingScreen(name='ending'))
 
 
@@ -143,8 +154,6 @@ class InvestFemme(App):
             itemCost = float(itemCostScreenVal)
             balance = itemCost * 0.8
             sm.switch_to(FirstStepScreen(name='first_step'))
-
-
         else:
             if len(itemName) > 0:
                 inputErrorText = False
@@ -158,10 +167,8 @@ class InvestFemme(App):
     def getSaveAmount(self):
         amount = self.root.get_screen('save_some').ids.txt_input.text
         print(amount)
-        sm.switch_to(SixMonthLaterScreen(name='sml'))
+        sm.switch_to(BankAccountScreen(name='bank_account'))
 
-    def printItemName(self):
-        return self.itemName
 
     def calculateInterest(self, p, n):
         r = 0.02

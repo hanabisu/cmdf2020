@@ -1,0 +1,14 @@
+<InvestmentScreen>
+    GridLayout:
+        row: 3
+        Label:
+            id: earning_text
+            pos: 300, 100
+        Label:
+            id: outcome_text
+            pos: 300, 50
+
+        Button:
+            text: 'continue'
+            pos: 300, 0
+            on_press: root.manager.current = 'ending'
