@@ -7,6 +7,8 @@ from os import path
 from kivy.config import Config
 from kivy.properties import StringProperty
 
+import math
+
 Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
 # Create both screens. Please note the root.manager.current: this is how
@@ -14,6 +16,7 @@ Config.set('graphics', 'height', '600')
 # property manager that gives you the instance of the ScreenManager used.
 screenFolder = 'screens'
 balance = StringProperty("100")
+savings = ""
 
 Builder.load_file(screenFolder+'/main_screen.kv')
 Builder.load_file(screenFolder+'/first_step.kv')
@@ -26,17 +29,20 @@ Builder.load_file(screenFolder+'/save_some.kv')
 Builder.load_file(screenFolder+'/bank_account.kv')
 Builder.load_file(screenFolder+'/ending.kv')
 
+
+
 # Declare both screens
 class MainScreen(Screen):
     global balance
     balanceScreen = balance
-    pass
 
 class EnterItemScreen(Screen):
-    pass
+    global item
+    item = TextInput(multiline = False).text
 
 class FirstStepScreen(Screen):
-    pass
+    itemName = item
+    print(itemName)
 
 class SpendAllScreen(Screen):
     pass
@@ -45,7 +51,8 @@ class SixMonthLaterScreen(Screen):
     pass
 
 class WorkingOptionScreen(Screen):
-    pass
+    global savings
+    amount = StringProperty(savings)
 
 class SaveAllScreen(Screen):
     pass
@@ -75,24 +82,31 @@ sm.add_widget(EndingScreen(name='ending'))
 
 class InvestFemme(App):
     balance = 100
-    itemName = ""
+    savings = ""
 
     def build(self):
-        balance = 100
+
         return sm
 
     def getItemName(self):
-        self.itemName = self.root.get_screen('enter_item').ids.txt_input.text
-        print(self.itemName)
+        item = self.root.get_screen('enter_item').ids.txt_input.text
+        print(item)
         sm.switch_to(FirstStepScreen(name='first_step'))
 
     def getSaveAmount(self):
         amount = self.root.get_screen('save_some').ids.txt_input.text
-        print(amount)
+        p = int(amount)
+        print(p)
+        n = 6
+        result = (self.calculateInterest(p, n))
+        savings = str(result)
+        print(savings)
         sm.switch_to(SixMonthLaterScreen(name='sml'))
 
-    def printItemName(self):
-        return self.itemName
+    def calculateInterest(self, p, n):
+        r = 0.02
+        return p*math.pow((1+r/n), n)
+
 
 if __name__ == '__main__':
     InvestFemme().run()
