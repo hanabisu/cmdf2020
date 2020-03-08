@@ -5,12 +5,15 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.floatlayout import FloatLayout
 from os import path
 from kivy.config import Config
+from kivy.properties import StringProperty
+
 Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
 # Create both screens. Please note the root.manager.current: this is how
 # you can control the ScreenManager from kv. Each screen has by default a
 # property manager that gives you the instance of the ScreenManager used.
 screenFolder = 'screens'
+balance = StringProperty("100")
 
 Builder.load_file(screenFolder+'/main_screen.kv')
 Builder.load_file(screenFolder+'/first_step.kv')
@@ -25,6 +28,8 @@ Builder.load_file(screenFolder+'/ending.kv')
 
 # Declare both screens
 class MainScreen(Screen):
+    global balance
+    balanceScreen = balance
     pass
 
 class EnterItemScreen(Screen):
