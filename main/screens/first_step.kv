@@ -7,13 +7,15 @@
     FloatLayout:
         Label:
             id: item_name
-            color:[0,0,1,1]
+            color:[0, 0, 0,1]
+            font_size:"20sp"
             size_hint: None, None
             size: 75, 50
             pos: (205, 465)
         Label:
             id: balance
-            color:[0,0,1,1]
+            font_size:"20sp"
+            color:[0, 0, 0, 1]
             size_hint: None, None
             size: 75, 50
             pos: (205, 385)
@@ -44,4 +46,4 @@
             color:[100, 100, 0, 8]
             pos: (550, 50)
             size: 200, 100
-            on_press: root.manager.current = 'save_all'
+            on_press: root.manager.current = 'bank_account'
