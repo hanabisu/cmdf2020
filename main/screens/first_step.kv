@@ -20,19 +20,28 @@
 
         Button:
             text: 'spend it all'
+            background_normal:'images/ButtonLarge.png'
+            font_name: 'COMIC'
+            color:[100, 100, 0, 8]
             size_hint: None, None
-            size: 75, 50
-            pos: (600, 300)
+            size: 200, 100
+            pos: (550, 250)
             on_press: root.manager.current = 'sml'
         Button:
             text: 'save some'
             size_hint: None, None
-            pos: (600, 200)
-            size: 75, 50
+            font_name: 'COMIC'
+            background_normal:'images/ButtonLarge.png'
+            color:[100, 100, 0, 8]
+            pos: (550, 150)
+            size: 200, 100
             on_press: root.manager.current = 'save_some'
         Button:
             text: 'save all'
             size_hint: None, None
-            pos: (600, 100)
-            size: 75, 50
+            font_name: 'COMIC'
+            background_normal:'images/ButtonLarge.png'
+            color:[100, 100, 0, 8]
+            pos: (550, 50)
+            size: 200, 100
             on_press: root.manager.current = 'save_all'
