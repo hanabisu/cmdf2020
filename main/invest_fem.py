@@ -16,9 +16,10 @@ Config.set('graphics', 'height', '600')
 # you can control the ScreenManager from kv. Each screen has by default a
 # property manager that gives you the instance of the ScreenManager used.
 screenFolder = 'screens'
-balance = 100.00
 itemName = ""
 itemCost = 0.0
+balance = 0.0
+
 inputErrorAmt = False
 inputErrorText = False
 for filename in os.listdir(screenFolder):
@@ -29,8 +30,6 @@ for filename in os.listdir(screenFolder):
 
 
 class MainScreen(Screen):
-    global balance
-    balanceScreen = balance
     pass
 
 
@@ -72,6 +71,7 @@ class FirstStepScreen(Screen):
         with self.canvas.before:
             global itemName
             global balance
+
             self.ids.item_name.text = itemName
             self.ids.balance.text = str(balance)
 
@@ -129,6 +129,31 @@ class InvestFemme(App):
 
     def build(self):
         return sm
+
+    def getItemInfo(self):
+        global itemName
+        global itemCost
+        global inputErrorText
+        global inputErrorAmt
+        global balance
+
+        itemName = self.root.get_screen('enter_item').ids.txt_input.text
+        itemCostScreenVal = self.root.get_screen('enter_item').ids.amt_input.text
+
+        if len(itemCostScreenVal) > 0 and len(itemName) > 0:
+            sm.switch_to(FirstStepScreen(name='first_step'))
+            itemCost = float(itemCostScreenVal)
+            balance = itemCost * 0.8
+
+        else:
+            if len(itemName) > 0:
+                inputErrorText = False
+            else:
+                inputErrorText = True
+            if len(itemCostScreenVal) > 0:
+                inputErrorAmt = False
+            else:
+                inputErrorAmt = True
 
     def getSaveAmount(self):
         amount = self.root.get_screen('save_some').ids.txt_input.text
