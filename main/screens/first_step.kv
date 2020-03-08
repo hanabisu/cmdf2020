@@ -1,22 +1,38 @@
 <FirstStepScreen>:
-    GridLayout:
-        row: 4
+    canvas.before:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:"images/relativemoney.png"
+    FloatLayout:
         Label:
-            text: 'You are given money, what do you want to do?'
-            size: 50, 20
-            pos: 350, 500
+            id: item_name
+            color:[0,0,1,1]
+            size_hint: None, None
+            size: 75, 50
+            pos: (205, 465)
+        Label:
+            id: balance
+            color:[0,0,1,1]
+            size_hint: None, None
+            size: 75, 50
+            pos: (205, 385)
+
         Button:
             text: 'spend it all'
-            size: 100, 50
-            pos: 350, 400
+            size_hint: None, None
+            size: 75, 50
+            pos: (600, 300)
             on_press: root.manager.current = 'sml'
         Button:
             text: 'save some'
-            size: 100, 50
-            pos: 350, 300
-            on_press: root.manager.current = 'sml'
+            size_hint: None, None
+            pos: (600, 200)
+            size: 75, 50
+            on_press: root.manager.current = 'save_some'
         Button:
             text: 'save all'
-            size: 100, 50
-            pos: 350, 200
-            on_press: root.manager.current = 'sml'
+            size_hint: None, None
+            pos: (600, 100)
+            size: 75, 50
+            on_press: root.manager.current = 'save_all'
