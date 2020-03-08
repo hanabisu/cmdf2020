@@ -6,6 +6,7 @@ from kivy.uix.floatlayout import FloatLayout
 from os import path
 from kivy.config import Config
 from kivy.properties import StringProperty
+import os
 
 import math
 
@@ -17,17 +18,13 @@ Config.set('graphics', 'height', '600')
 screenFolder = 'screens'
 balance = StringProperty("100")
 savings = ""
+itemName = ""
+itemCost = 0.0
+inputErrorAmt = False
+inputErrorText = False
+for filename in os.listdir("./" + screenFolder):
+    Builder.load_file(os.path.join(screenFolder, filename))
 
-Builder.load_file(screenFolder+'/main_screen.kv')
-Builder.load_file(screenFolder+'/first_step.kv')
-Builder.load_file(screenFolder+'/enter_item.kv')
-Builder.load_file(screenFolder+'/sml.kv')
-Builder.load_file(screenFolder+'/spend_all.kv')
-Builder.load_file(screenFolder+'/work_option.kv')
-Builder.load_file(screenFolder+'/save_all.kv')
-Builder.load_file(screenFolder+'/save_some.kv')
-Builder.load_file(screenFolder+'/bank_account.kv')
-Builder.load_file(screenFolder+'/ending.kv')
 
 
 
@@ -36,35 +33,61 @@ class MainScreen(Screen):
     global balance
     balanceScreen = balance
 
+
 class EnterItemScreen(Screen):
+
     global item
     item = TextInput(multiline = False).text
+
+    global inputErrorAmt
+    global inputErrorText
+
+    def errorDisplay(self):
+        if inputErrorAmt:
+            self.ids.error_amt.text = "Please enter an amount"
+        else:
+            self.ids.error_amt.text = ""
+
+        if inputErrorText:
+            self.ids.error_text.text = "Please enter an item"
+        else:
+            self.ids.error_text.text = ""
+
+
 
 class FirstStepScreen(Screen):
     itemName = item
     print(itemName)
 
+
 class SpendAllScreen(Screen):
     pass
 
+
 class SixMonthLaterScreen(Screen):
     pass
+
 
 class WorkingOptionScreen(Screen):
     global savings
     amount = StringProperty(savings)
 
+
 class SaveAllScreen(Screen):
     pass
+
 
 class SaveSomeScreen(Screen):
     pass
 
+
 class BankAccountScreen(Screen):
     pass
 
+
 class EndingScreen(Screen):
     pass
+
 
 # Create the screen manager
 sm = ScreenManager()
@@ -81,6 +104,7 @@ sm.add_widget(EndingScreen(name='ending'))
 
 
 class InvestFemme(App):
+
     balance = 100
     savings = ""
 
@@ -92,6 +116,30 @@ class InvestFemme(App):
         item = self.root.get_screen('enter_item').ids.txt_input.text
         print(item)
         sm.switch_to(FirstStepScreen(name='first_step'))
+    itemName = ""
+
+    def build(self):
+        return sm
+
+    def getItemInfo(self):
+        global itemName
+        global itemCost
+        global inputErrorText
+        global inputErrorAmt
+        itemName = self.root.get_screen('enter_item').ids.txt_input.text
+        itemCostScreenVal = self.root.get_screen('enter_item').ids.amt_input.text
+        if len(itemCostScreenVal) > 0 and len(itemName) > 0:
+            sm.switch_to(FirstStepScreen(name='first_step'))
+            itemCost = float(itemCostScreenVal)
+        else:
+            if len(itemName) > 0:
+                inputErrorText = False
+            else:
+                inputErrorText = True
+            if len(itemCostScreenVal) > 0:
+                inputErrorAmt = False
+            else:
+                inputErrorAmt = True
 
     def getSaveAmount(self):
         amount = self.root.get_screen('save_some').ids.txt_input.text
@@ -106,6 +154,7 @@ class InvestFemme(App):
     def calculateInterest(self, p, n):
         r = 0.02
         return p*math.pow((1+r/n), n)
+
 
 
 if __name__ == '__main__':
