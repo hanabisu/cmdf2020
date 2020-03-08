@@ -33,6 +33,9 @@ for filename in os.listdir(screenFolder):
 
 
 class MainScreen(Screen):
+    def closeScreen(self):
+        App.get_running_app().stop()
+        Window.close()
     pass
 
 
