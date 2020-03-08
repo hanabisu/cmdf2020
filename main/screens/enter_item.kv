@@ -1,14 +1,15 @@
 <EnterItemScreen>:
-    GridLayout:
-        rows:3
-        Button:
-            text: 'What do you want to buy?'
-            
+    canvas.before:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:"images/firstscreen.png"
+    FloatLayout:
         TextInput:
             id:txt_input
+            cursor_color:[0,0,1,1]
             multiline: False
-            on_text_validate: root.manager.current = 'first_step'
-            
-        Button:
-            text: 'Back to start'
-            on_press: root.manager.current = 'main'
+            hint_text:"Item..."
+            size_hint: 0.35, 0.1
+            pos_hint: {"x":0.6, "y":0.3}
+            on_text_validate: app.getItemName()
