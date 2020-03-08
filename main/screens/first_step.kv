@@ -7,32 +7,43 @@
     FloatLayout:
         Label:
             id: item_name
-            color:[0,0,1,1]
+            color:[0, 0, 0,1]
+            font_size:"20sp"
             size_hint: None, None
             size: 75, 50
             pos: (205, 465)
         Label:
             id: balance
-            color:[0,0,1,1]
+            font_size:"20sp"
+            color:[0, 0, 0, 1]
             size_hint: None, None
             size: 75, 50
             pos: (205, 385)
 
         Button:
             text: 'spend it all'
+            background_normal:'images/ButtonLarge.png'
+            font_name: 'COMIC'
+            color:[100, 100, 0, 8]
             size_hint: None, None
-            size: 75, 50
-            pos: (600, 300)
+            size: 200, 100
+            pos: (550, 250)
             on_press: root.manager.current = 'work_option'
         Button:
             text: 'save some'
             size_hint: None, None
-            pos: (600, 200)
-            size: 75, 50
+            font_name: 'COMIC'
+            background_normal:'images/ButtonLarge.png'
+            color:[100, 100, 0, 8]
+            pos: (550, 150)
+            size: 200, 100
             on_press: root.manager.current = 'save_some'
         Button:
             text: 'save all'
-            size_hint: None, None
-            pos: (600, 100)
-            size: 75, 50
+            size_hint: None, Nones
+            font_name: 'COMIC'
+            background_normal:'images/ButtonLarge.png'
+            color:[100, 100, 0, 8]
+            pos: (550, 50)
+            size: 200, 100
             on_press: root.manager.current = 'bank_account'
