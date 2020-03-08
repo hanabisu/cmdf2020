@@ -20,14 +20,23 @@
             size: 75, 50
             pos: (205, 385)
 
+        Label:
+            text: "What would you like to do with your money?"
+            color:[0, 0, 0,1]
+            font_size:"20sp"
+            size_hint: None, None
+            size: 75, 50
+            pos: (550, 330)
+
         Button:
             text: 'spend it all'
             background_normal:'images/ButtonLarge.png'
             color:[100, 100, 0, 8]
             size_hint: None, None
-            size: 200, 100
-            pos: (550, 250)
-            on_press: root.manager.current = 'work_option'
+            size: 75, 50
+            pos: (600, 300)
+            on_press: root.manager.current = 'ending'
+
         Button:
             text: 'save some'
             size_hint: None, None

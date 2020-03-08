@@ -1,4 +1,9 @@
 <EndingScreen>
+    canvas.before:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:"images/end screen.png"
     FloatLayout:
         Label:
             font_size: 32
@@ -6,5 +11,5 @@
         Button:
             text: 'close window'
             size_hint: 0.25, 0.05
-            pos_hint: {"center_x":0.5, "y":0.15}
+            pos_hint: {"center_x":0.5, "y":0.25}
             on_press: root.closeScreen()
