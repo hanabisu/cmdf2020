@@ -21,11 +21,13 @@ itemName = ""
 itemCost = 0.0
 inputErrorAmt = False
 inputErrorText = False
-for filename in os.listdir("./" + screenFolder):
-    Builder.load_file(os.path.join(screenFolder, filename))
+for filename in os.listdir(screenFolder):
+    with open(os.path.join(screenFolder, filename), encoding='utf8') as f:
+        Builder.load_string(f.read())
+
+        # Declare both screens
 
 
-# Declare both screens
 class MainScreen(Screen):
     global balance
     balanceScreen = balance
@@ -36,16 +38,30 @@ class EnterItemScreen(Screen):
     global inputErrorAmt
     global inputErrorText
 
-    def errorDisplay(self):
-        if inputErrorAmt:
-            self.ids.error_amt.text = "Please enter an amount"
-        else:
-            self.ids.error_amt.text = ""
+    def __init__(self, **kwargs):
+        super(EnterItemScreen, self).__init__(**kwargs)
 
-        if inputErrorText:
+    def itemErrorDisplay(self):
+        itemName = self.root.get_screen('enter_item').ids.txt_input.text
+        itemCostScreenVal = self.root.get_screen('enter_item').ids.amt_input.text
+        if len(itemCostScreenVal) > 0 and len(itemName) > 0:
+            sm.switch_to(FirstStepScreen(name='first_step'))
+            itemCost = float(itemCostScreenVal)
+
+        if len(itemName):
             self.ids.error_text.text = "Please enter an item"
         else:
             self.ids.error_text.text = ""
+
+    def amtErrorDisplay(self):
+        if len(itemCostScreenVal) > 0 and len(itemName) > 0:
+            sm.switch_to(FirstStepScreen(name='first_step'))
+            itemCost = float(itemCostScreenVal)
+
+        if len(itemCostScreenVal) < 1:
+            self.ids.error_amt.text = "Please enter an amount"
+        else:
+            self.ids.error_amt.text = ""
 
     pass
 
@@ -113,26 +129,6 @@ class InvestFemme(App):
 
     def build(self):
         return sm
-
-    def getItemInfo(self):
-        global itemName
-        global itemCost
-        global inputErrorText
-        global inputErrorAmt
-        itemName = self.root.get_screen('enter_item').ids.txt_input.text
-        itemCostScreenVal = self.root.get_screen('enter_item').ids.amt_input.text
-        if len(itemCostScreenVal) > 0 and len(itemName) > 0:
-            sm.switch_to(FirstStepScreen(name='first_step'))
-            itemCost = float(itemCostScreenVal)
-        else:
-            if len(itemName) > 0:
-                inputErrorText = False
-            else:
-                inputErrorText = True
-            if len(itemCostScreenVal) > 0:
-                inputErrorAmt = False
-            else:
-                inputErrorAmt = True
 
     def getSaveAmount(self):
         amount = self.root.get_screen('save_some').ids.txt_input.text
