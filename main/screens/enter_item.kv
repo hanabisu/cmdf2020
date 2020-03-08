@@ -1,0 +1,14 @@
+<EnterItemScreen>:
+    GridLayout:
+        rows:3
+        Button:
+            text: 'What do you want to buy?'
+            
+        TextInput:
+            id:txt_input
+            multiline: False
+            on_text_validate: root.manager.current = 'first_step'
+            
+        Button:
+            text: 'Back to start'
+            on_press: root.manager.current = 'main'
