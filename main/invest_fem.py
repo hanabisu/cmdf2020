@@ -1,4 +1,5 @@
 import os
+import math
 from os import path
 
 from kivy.app import App
@@ -19,6 +20,8 @@ screenFolder = 'screens'
 itemName = ""
 itemCost = 0.0
 balance = 0.0
+savings = 0.0
+workoptions = ""
 
 inputErrorAmt = False
 inputErrorText = False
@@ -71,6 +74,15 @@ class SixMonthLaterScreen(Screen):
 
 
 class WorkingOptionScreen(Screen):
+    # def __init__(self, **kwargs):
+    #     super(WorkingOptionScreen, self).__init__(**kwargs)
+    #     with self.canvas.before:
+    #         global work_text
+    #         global savings
+    #
+    #         self.ids.work_opion.text = 'you have $' + savings + 'saved in your savings, do you want to work?'
+    #         self.ids.balance.text = str(balance)
+
     pass
 
 
@@ -109,7 +121,6 @@ sm.add_widget(EndingScreen(name='ending'))
 
 
 class InvestFemme(App):
-    itemName = ""
 
     def build(self):
         return sm
@@ -120,14 +131,16 @@ class InvestFemme(App):
         global inputErrorText
         global inputErrorAmt
         global balance
+        global savings
 
         itemName = self.root.get_screen('enter_item').ids.txt_input.text
         itemCostScreenVal = self.root.get_screen('enter_item').ids.amt_input.text
 
         if len(itemCostScreenVal) > 0 and len(itemName) > 0:
-            sm.switch_to(FirstStepScreen(name='first_step'))
             itemCost = float(itemCostScreenVal)
             balance = itemCost * 0.8
+            sm.switch_to(FirstStepScreen(name='first_step'))
+
 
         else:
             if len(itemName) > 0:
@@ -146,6 +159,10 @@ class InvestFemme(App):
 
     def printItemName(self):
         return self.itemName
+
+    def calculateInterest(self, p, n):
+        r = 0.02
+        return p * math.pow((1-r/n), n)
 
 
 if __name__ == '__main__':
