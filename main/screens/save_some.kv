@@ -1,16 +1,25 @@
 <SaveSomeScreen>:
     GridLayout:
-        row: 2
+        row: 3
         Label:
             font_size: 32
             text: 'how much to save?'
             size: 100, 50
             pos: 350, 400
         TextInput:
-            id:txt_input
+            id:text_input
             cursor_color:[0,0,1,1]
             multiline: False
             hint_text:"?"
             size: 100, 50
             pos: 350, 350
-            on_text_validate: app.getSaveAmount()
+            input_filter:'float'
+            on_text_validate:
+                root.getSaveAmount()
+
+        FloatLayout
+        Label:
+            id: error_msg
+            color:[1,0,0,1]
+            size_hint: 0.35, 0.05
+            pos: 350, 400
