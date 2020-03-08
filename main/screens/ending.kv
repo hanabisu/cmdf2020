@@ -1,4 +1,10 @@
 <EndingScreen>
-    Label:
-        font_size: 32
-        text: 'end'
+    FloatLayout:
+        Label:
+            font_size: 32
+            text: 'end'
+        Button:
+            text: 'close window'
+            size_hint: 0.25, 0.05
+            pos_hint: {"center_x":0.5, "y":0.15}
+            on_press: root.closeScreen()

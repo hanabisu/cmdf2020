@@ -1,12 +1,14 @@
+import os
+from os import path
+
 from kivy.app import App
+from kivy.config import Config
+from kivy.core.window import Window
 from kivy.lang import Builder
+from kivy.properties import StringProperty
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.textinput import TextInput
-from kivy.uix.floatlayout import FloatLayout
-from os import path
-from kivy.config import Config
-from kivy.properties import StringProperty
-import os
 
 Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
@@ -78,6 +80,9 @@ class BankAccountScreen(Screen):
 
 
 class EndingScreen(Screen):
+    def closeScreen(self):
+        App.get_running_app().stop()
+        Window.close()
     pass
 
 
