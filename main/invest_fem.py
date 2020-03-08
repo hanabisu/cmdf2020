@@ -23,7 +23,8 @@ itemCost = 0.0
 balance = 0.0
 savings = 99.0
 workoptions = ""
-amount = 99.0
+amount = 0.0
+
 
 inputErrorAmt = False
 inputErrorText = False
@@ -59,10 +60,11 @@ class FirstStepScreen(Screen):
         super(FirstStepScreen, self).__init__(**kwargs)
         with self.canvas.before:
             global itemName
-            global balance
+            global amount
 
             self.ids.item_name.text = itemName
-            self.ids.balance.text = str(balance)
+            self.ids.balance.text = str(amount)
+
     pass
 
 
@@ -85,6 +87,16 @@ class WorkingOptionScreen(Screen):
 
 
 class SaveSomeScreen(Screen):
+    def getSaveAmount(self):
+        global amount
+        amountFromScreen = float(self.ids.text_input.text)
+        if amountFromScreen > amount:
+            amount = 0.0
+            self.ids.error_msg.text = "Please enter a smaller amount"
+            self.ids.text_input.text = ""
+        else:
+            amount = amountFromScreen
+            sm.switch_to(SixMonthLaterScreen(name='sml'))
     pass
 
 
@@ -126,7 +138,6 @@ sm.add_widget(MainScreen(name='main'))
 sm.add_widget(EnterItemScreen(name='enter_item'))
 sm.add_widget(FirstStepScreen(name='first_step'))
 sm.add_widget(SixMonthLaterScreen(name='sml'))
-sm.add_widget(WorkingOptionScreen(name='work_option'))
 sm.add_widget(SpendAllScreen(name='spend_all'))
 sm.add_widget(SaveSomeScreen(name='save_some'))
 sm.add_widget(BankAccountScreen(name='bank_account'))
@@ -144,7 +155,7 @@ class InvestFemme(App):
         global itemCost
         global inputErrorText
         global inputErrorAmt
-        global balance
+        global amount
         global savings
 
         itemName = self.root.get_screen('enter_item').ids.txt_input.text
@@ -152,7 +163,7 @@ class InvestFemme(App):
 
         if len(itemCostScreenVal) > 0 and len(itemName) > 0:
             itemCost = float(itemCostScreenVal)
-            balance = itemCost * 0.8
+            amount = int (itemCost * 0.8)
             sm.switch_to(FirstStepScreen(name='first_step'))
         else:
             if len(itemName) > 0:
@@ -164,15 +175,11 @@ class InvestFemme(App):
             else:
                 inputErrorAmt = True
 
-    def getSaveAmount(self):
-        amount = self.root.get_screen('save_some').ids.txt_input.text
-        print(amount)
-        sm.switch_to(BankAccountScreen(name='bank_account'))
-
-
     def calculateInterest(self, p, n):
         r = 0.02
         return p * math.pow((1-r/n), n)
+
+
 
 
 if __name__ == '__main__':
