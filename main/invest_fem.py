@@ -86,6 +86,11 @@ class InvestFemme(App):
         print(self.itemName)
         sm.switch_to(FirstStepScreen(name='first_step'))
 
+    def getItemCost(self):
+        self.itemName = self.root.get_screen('enter_item').ids.amt_input.text
+        print(self.itemName)
+        sm.switch_to(FirstStepScreen(name='first_step'))
+
     def getSaveAmount(self):
         amount = self.root.get_screen('save_some').ids.txt_input.text
         print(amount)
