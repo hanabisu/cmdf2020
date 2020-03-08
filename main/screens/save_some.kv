@@ -1,0 +1,16 @@
+<SaveSomeScreen>:
+    GridLayout:
+        row: 2
+        Label:
+            font_size: 32
+            text: 'how much to save?'
+            size: 100, 50
+            pos: 350, 400
+        TextInput:
+            id:txt_input
+            cursor_color:[0,0,1,1]
+            multiline: False
+            hint_text:"?"
+            size: 100, 50
+            pos: 350, 350
+            on_text_validate: app.getSaveAmount()
