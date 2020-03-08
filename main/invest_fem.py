@@ -16,7 +16,7 @@ Config.set('graphics', 'height', '600')
 # you can control the ScreenManager from kv. Each screen has by default a
 # property manager that gives you the instance of the ScreenManager used.
 screenFolder = 'screens'
-balance = StringProperty("100")
+balance = 100.00
 itemName = ""
 itemCost = 0.0
 inputErrorAmt = False
@@ -46,12 +46,19 @@ class EnterItemScreen(Screen):
             self.ids.error_text.text = "Please enter an item"
         else:
             self.ids.error_text.text = ""
-    pass
-    pass
 
+    pass
 
 
 class FirstStepScreen(Screen):
+    def __init__(self, **kwargs):
+        super(FirstStepScreen, self).__init__(**kwargs)
+        with self.canvas.before:
+            global itemName
+            global balance
+            self.ids.item_name.text = itemName
+            self.ids.balance.text = str(balance)
+
     pass
 
 
@@ -83,6 +90,7 @@ class EndingScreen(Screen):
     def closeScreen(self):
         App.get_running_app().stop()
         Window.close()
+
     pass
 
 
