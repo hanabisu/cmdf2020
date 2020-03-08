@@ -25,11 +25,13 @@ workoptions = ""
 
 inputErrorAmt = False
 inputErrorText = False
-for filename in os.listdir("./" + screenFolder):
-    Builder.load_file(os.path.join(screenFolder, filename))
+for filename in os.listdir(screenFolder):
+    with open(os.path.join(screenFolder, filename), encoding='utf8') as f:
+        Builder.load_string(f.read())
+
+        # Declare both screens
 
 
-# Declare both screens
 class MainScreen(Screen):
     pass
 
@@ -48,9 +50,7 @@ class EnterItemScreen(Screen):
             self.ids.error_text.text = "Please enter an item"
         else:
             self.ids.error_text.text = ""
-
     pass
-
 
 class FirstStepScreen(Screen):
     def __init__(self, **kwargs):
