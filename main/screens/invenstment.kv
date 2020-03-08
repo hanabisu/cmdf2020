@@ -1,9 +1,24 @@
 <InvestmentScreen>
+    canvas.before:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:"images/investmentresult.png"
     GridLayout:
-        row: 2
+        row: 3
+
         Label:
             id: earning_text
-            pos: 300, 100
+            font_size: 28
+            color:[0, 0, 0, 1]
+            pos: 350, 300
         Label:
             id: outcome_text
-            pos: 300, 50
+            font_size: 28
+            color:[0, 0, 0, 1]
+            pos: 350, 200
+        Button:
+            text: 'continue'
+            size: 100, 50
+            pos: 350, 100
+            on_press: root.manager.current = 'ending'
