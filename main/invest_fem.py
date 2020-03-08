@@ -6,7 +6,7 @@ from kivy.uix.floatlayout import FloatLayout
 from os import path
 from kivy.config import Config
 from kivy.properties import StringProperty
-
+import os
 Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
 # Create both screens. Please note the root.manager.current: this is how
@@ -15,16 +15,8 @@ Config.set('graphics', 'height', '600')
 screenFolder = 'screens'
 balance = StringProperty("100")
 
-Builder.load_file(screenFolder+'/main_screen.kv')
-Builder.load_file(screenFolder+'/first_step.kv')
-Builder.load_file(screenFolder+'/enter_item.kv')
-Builder.load_file(screenFolder+'/sml.kv')
-Builder.load_file(screenFolder+'/spend_all.kv')
-Builder.load_file(screenFolder+'/work_option.kv')
-Builder.load_file(screenFolder+'/save_all.kv')
-Builder.load_file(screenFolder+'/save_some.kv')
-Builder.load_file(screenFolder+'/bank_account.kv')
-Builder.load_file(screenFolder+'/ending.kv')
+for filename in os.listdir("./"+screenFolder):
+    Builder.load_file(os.path.join(screenFolder, filename))
 
 # Declare both screens
 class MainScreen(Screen):
