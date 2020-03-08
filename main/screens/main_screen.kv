@@ -1,20 +1,28 @@
 <MainScreen>:
+    canvas.before:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:"images/startscreen.png"
     FloatLayout:
-        Label:
-            text: "test"
         GridLayout:
             rows:2
             row_force_default: True
-            row_default_height: 50
-            pos_hint: {'center_x':0.5, "y":0.15}
+            row_default_height: 110
+            pos_hint: {'center_x':0.7, "y":0.30}
             size_hint: (None, None)
             Button:
-                size: 75, 50
                 size_hint: None, None
+                size: 200, 100
+                background_normal:'images/ButtonLarge.png'
+                color:[100, 100, 0, 8]
                 text: 'Start App'
                 on_press: root.manager.current = 'enter_item'
             Button:
-                size: 75, 50
+                size: 200, 100
+                background_normal:'images/ButtonLarge.png'
+                color:[100, 100, 0, 8]
                 size_hint: None, None
                 text: 'Quit'
+                on_press: root.closeScreen()
 
