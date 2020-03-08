@@ -1,0 +1,15 @@
+<EnterItemScreen>:
+    canvas.before:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:"images/firstscreen.png"
+    FloatLayout:
+        TextInput:
+            id:txt_input
+            cursor_color:[0,0,1,1]
+            multiline: False
+            hint_text:"Item..."
+            size_hint: 0.35, 0.1
+            pos_hint: {"x":0.6, "y":0.3}
+            on_text_validate: app.getItemName()

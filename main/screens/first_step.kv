@@ -1,0 +1,22 @@
+<FirstStepScreen>:
+    GridLayout:
+        row: 4
+        Label:
+            text: 'You are given money, what do you want to do?'
+            size: 50, 20
+            pos: 350, 500
+        Button:
+            text: 'spend it all'
+            size: 100, 50
+            pos: 350, 400
+            on_press: root.manager.current = 'sml'
+        Button:
+            text: 'save some'
+            size: 100, 50
+            pos: 350, 300
+            on_press: root.manager.current = 'sml'
+        Button:
+            text: 'save all'
+            size: 100, 50
+            pos: 350, 200
+            on_press: root.manager.current = 'sml'
