@@ -90,13 +90,13 @@ class SaveSomeScreen(Screen):
     def getSaveAmount(self):
         global amount
         amountFromScreen = float(self.ids.text_input.text)
-        if amountFromScreen > amount:
-            amount = 0.0
-            self.ids.error_msg.text = "Please enter a smaller amount"
-            self.ids.text_input.text = ""
-        else:
-            amount = amountFromScreen
-            sm.switch_to(SixMonthLaterScreen(name='sml'))
+        # if amountFromScreen > amount:
+        #     amount = 0.0
+        #     self.ids.error_msg.text = "Please enter a smaller amount"
+        #     self.ids.text_input.text = ""
+        # else:
+        amount = amountFromScreen
+        sm.switch_to(SixMonthLaterScreen(name='sml'))
     pass
 
 
