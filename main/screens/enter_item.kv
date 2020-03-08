@@ -12,7 +12,9 @@
             hint_text:"Item..."
             size_hint: 0.35, 0.05
             pos_hint: {"x":0.6, "y":0.3}
-            on_text_validate: app.getItemName()
+            on_text_validate:
+                app.getItemInfo()
+                root.errorDisplay()
 
         TextInput:
             id:amt_input
@@ -22,4 +24,17 @@
             size_hint: 0.35, 0.05
             pos_hint: {"x":0.6, "y":0.2}
             input_filter:'float'
-            on_text_validate: app.getItemCost()
+            on_text_validate:
+                app.getItemInfo()
+                root.errorDisplay()
+        Label:
+            id: error_amt
+            color:[1,0,0,1]
+            size_hint: 0.35, 0.05
+            pos_hint: {"x":0.55, "y":0.15}
+        Label:
+            id: error_text
+            color:[1,0,0,1]
+            size_hint: 0.35, 0.05
+            pos_hint: {"x":0.55, "y":0.25}
+
