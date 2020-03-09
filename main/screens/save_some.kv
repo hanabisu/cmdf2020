@@ -9,18 +9,16 @@
             id:text_input
             cursor_color:[0,0,1,1]
             multiline: False
-            hint_text:"?"
-            size: 200, 50
-            size_hint: None, None
-            pos: 350, 100
+            hint_text:"0.00"
+            size_hint: 0.35, 0.05
+            pos: 270, 190
             input_filter:'float'
             on_text_validate:
                 root.getSaveAmount()
 
-        FloatLayout
         Label:
             id: error_msg
             color:[1,0,0,1]
             size_hint: 0.35, 0.05
             size_hint: None, None
-            pos: 350, 150
+            pos: 350, 100

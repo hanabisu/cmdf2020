@@ -25,17 +25,18 @@ savings = 99.0
 workoptions = ""
 amount = 0.0
 
-
 inputErrorAmt = False
 inputErrorText = False
 for filename in os.listdir(screenFolder):
     with open(os.path.join(screenFolder, filename), encoding='utf8') as f:
         Builder.load_string(f.read())
 
+
 class MainScreen(Screen):
     def closeScreen(self):
         App.get_running_app().stop()
         Window.close()
+
     pass
 
 
@@ -53,7 +54,9 @@ class EnterItemScreen(Screen):
             self.ids.error_text.text = "Please enter an item"
         else:
             self.ids.error_text.text = ""
+
     pass
+
 
 class FirstStepScreen(Screen):
     def __init__(self, **kwargs):
@@ -89,23 +92,28 @@ class WorkingOptionScreen(Screen):
 class SaveSomeScreen(Screen):
     def getSaveAmount(self):
         global amount
-        amountFromScreen = float(self.ids.text_input.text)
+        amountFromScreen = self.ids.text_input.text
         print(amountFromScreen)
         print(amount)
-        if amountFromScreen > amount:
+        if len(amountFromScreen) < 1:
+            self.ids.error_msg.text = "Please enter an amount"
+        elif float(amountFromScreen) > amount:
             self.ids.error_msg.text = "Please enter a smaller amount"
             self.ids.text_input.text = ""
         else:
             self.ids.error_msg.text = ""
             amount = amountFromScreen
             sm.switch_to(BankAccountScreen(name='bank_account'))
+
     pass
 
 
 class BankAccountScreen(Screen):
     def switchToInvestment(self):
         sm.switch_to(InvestmentScreen(name='investment'))
+
     pass
+
 
 class InvestmentScreen(Screen):
 
@@ -124,9 +132,8 @@ class InvestmentScreen(Screen):
                 self.ids.earning_text.text = 'Too bad! You lost $' + earnings_text + ' !'
             self.ids.outcome_text.text = 'Your current balance is $' + outcome_text + ' !'
 
-
     def getOutcome(self, p):
-        outcome = int(p*(1+random.uniform(-1 , 1)))
+        outcome = int(p * (1 + random.uniform(-1, 1)))
         return outcome
 
 
@@ -134,7 +141,6 @@ class EndingScreen(Screen):
     def closeScreen(self):
         App.get_running_app().stop()
         Window.close()
-
 
 
 # Create the screen manager
@@ -182,9 +188,7 @@ class InvestFemme(App):
 
     def calculateInterest(self, p, n):
         r = 0.02
-        return p * math.pow((1-r/n), n)
-
-
+        return p * math.pow((1 - r / n), n)
 
 
 if __name__ == '__main__':
