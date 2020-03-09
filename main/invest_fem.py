@@ -90,17 +90,21 @@ class SaveSomeScreen(Screen):
     def getSaveAmount(self):
         global amount
         amountFromScreen = float(self.ids.text_input.text)
-        # if amountFromScreen > amount:
-        #     amount = 0.0
-        #     self.ids.error_msg.text = "Please enter a smaller amount"
-        #     self.ids.text_input.text = ""
-        # else:
-        amount = amountFromScreen
-        sm.switch_to(SixMonthLaterScreen(name='sml'))
+        print(amountFromScreen)
+        print(amount)
+        if amountFromScreen > amount:
+            self.ids.error_msg.text = "Please enter a smaller amount"
+            self.ids.text_input.text = ""
+        else:
+            self.ids.error_msg.text = ""
+            amount = amountFromScreen
+            sm.switch_to(BankAccountScreen(name='bank_account'))
     pass
 
 
 class BankAccountScreen(Screen):
+    def switchToInvestment(self):
+        sm.switch_to(InvestmentScreen(name='investment'))
     pass
 
 class InvestmentScreen(Screen):
@@ -109,6 +113,7 @@ class InvestmentScreen(Screen):
         super(InvestmentScreen, self).__init__(**kwargs)
         with self.canvas.before:
             global amount
+            print(amount)
             outcome = self.getOutcome(amount)
             earnings = outcome - amount
             earnings_text = str(abs(earnings))
@@ -163,7 +168,7 @@ class InvestFemme(App):
 
         if len(itemCostScreenVal) > 0 and len(itemName) > 0:
             itemCost = float(itemCostScreenVal)
-            amount = int (itemCost * 0.8)
+            amount = int(itemCost * 0.8)
             sm.switch_to(FirstStepScreen(name='first_step'))
         else:
             if len(itemName) > 0:
