@@ -102,7 +102,7 @@ class SaveSomeScreen(Screen):
             self.ids.text_input.text = ""
         else:
             self.ids.error_msg.text = ""
-            amount = amountFromScreen
+            amount = float(amountFromScreen)
             sm.switch_to(BankAccountScreen(name='bank_account'))
 
     pass
